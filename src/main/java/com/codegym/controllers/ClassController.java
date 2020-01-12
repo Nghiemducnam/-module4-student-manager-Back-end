@@ -17,7 +17,7 @@ public class ClassController {
     @Autowired
     private ClassService classService;
     @GetMapping("/api/class/")
-    ResponseEntity<List<Clazz>> getClassList(){
+    public ResponseEntity<List<Clazz>> getClassList(){
         List<Clazz> clazzList = classService.findAllClass();
         if(clazzList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -26,7 +26,7 @@ public class ClassController {
     }
 
     @PostMapping("/api/class/")
-    ResponseEntity<Clazz> createClass(@RequestBody Clazz clazz, UriComponentsBuilder ucBuilder){
+    public ResponseEntity<Clazz> createClass(@RequestBody Clazz clazz, UriComponentsBuilder ucBuilder){
         classService.saveClass(clazz);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/api/class/{id}").buildAndExpand(clazz.getClassId()).toUri());

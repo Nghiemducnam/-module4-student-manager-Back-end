@@ -10,4 +10,5 @@ public interface StudentService {
     Optional<Student> findByStudentId(Long id);
     Student saveStudent(Student student);
     void removeStudent(Long id);
+    List<Student> findAllByStudentName(String studentName);
 }

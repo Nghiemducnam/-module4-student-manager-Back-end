@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,5 +32,16 @@ public class StudentController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/api/student/{id}").buildAndExpand(student.getStudentId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/api/student/search/student")
+    ResponseEntity<?> findCategory(@RequestParam("name") Optional<String> studentName) {
+        List<Student> students;
+        if(studentName.isPresent()){
+            students = studentService.findAllByStudentName(studentName.get());
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 }
